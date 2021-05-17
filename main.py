@@ -17,19 +17,23 @@ or implied.
 import requests, urllib
 
 from flask import Flask, request, redirect, url_for, render_template
-from env_var import *
 from werkzeug.utils import secure_filename
 
 import time
+import os
 
 from webex_meetings import csv_scheduler
 
 WEBEX_LOGIN_API_URL = "https://webexapis.com/v1"
 WEBEX_MEETINGS_API_URL = "https://api.webex.com/WBXService/XMLService"
 
+webex_integration_client_id = os.environ["INT_CLIENT_ID"]
+webex_integration_client_secret= os.environ["INT_CLIENT_SECRET"]
+webex_integration_redirect_uri = "http://localhost:5000/webexoauth"
+webex_integration_scope = "spark:all meeting:schedules_write"
+
 # Flask app
 app = Flask(__name__)
-
 
 # login page
 @app.route('/')

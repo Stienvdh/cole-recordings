@@ -29,6 +29,8 @@ github_version = config['github_version']
 webex_bot_token = config['webex_bot_token']
 webex_bot_email = config['webex_bot_email']
 webex_room_id = config['webex_room_id']
+webex_client_id = config['webex_integration_client_id']
+webex_client_secret = config['webex_integration_client_secret']
 
 
 # set API information
@@ -83,7 +85,9 @@ while True:
 
 # configure config vars on app
 payload_configvars = {
-    "WT_BOT_TOKEN": webex_bot_token
+    "WT_BOT_TOKEN": webex_bot_token,
+    "INT_CLIENT_ID": webex_client_id,
+    "INT_CLIENT_SECRET": webex_client_secret
 }
 if webex_bot_email != '':
     payload_configvars['WT_BOT_EMAIL'] = webex_bot_email
