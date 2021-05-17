@@ -26,7 +26,6 @@ from webex_meetings import csv_scheduler
 
 WEBEX_LOGIN_API_URL = "https://webexapis.com/v1"
 WEBEX_MEETINGS_API_URL = "https://api.webex.com/WBXService/XMLService"
-REDIRECT_URI = ""
 
 webex_integration_client_id = os.environ["INT_CLIENT_ID"]
 webex_integration_client_secret= os.environ["INT_CLIENT_SECRET"]
@@ -55,7 +54,6 @@ def upload_file():
 # webex access token
 @app.route('/webexlogin', methods=['POST'])
 def webexlogin():
-    global REDIRECT_URI
     WEBEX_USER_AUTH_URL = WEBEX_LOGIN_API_URL + "/authorize?client_id={client_id}&response_type=code&redirect_uri={redirect_uri}&response_mode=query&scope={scope}".format(
         client_id=urllib.parse.quote(webex_integration_client_id),
         redirect_uri= urllib.parse.quote(f'{request.url_root}webexoauth'),
