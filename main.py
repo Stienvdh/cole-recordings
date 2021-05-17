@@ -61,7 +61,7 @@ def webexlogin():
         redirect_uri= urllib.parse.quote(f'{request.url_root}webexoauth'),
         scope=urllib.parse.quote(webex_integration_scope)
     )
-    REDIRECT_URI = f'{request.url_root}webexoauth'
+    os.environ['REDIRECT_URI'] = f'{request.url_root}webexoauth'
     return redirect(WEBEX_USER_AUTH_URL)
 
 
@@ -72,11 +72,11 @@ def webexoauth():
     headers_token = {
         "Content-type": "application/x-www-form-urlencoded"
     }
-    global REDIRECT_URI
+
     body = {
         'client_id': webex_integration_client_id,
         'code': webex_code,
-        'redirect_uri': REDIRECT_URI,
+        'redirect_uri': os.environ['REDIRECT_URI'],
         'grant_type': 'authorization_code',
         'client_secret': webex_integration_client_secret
     }

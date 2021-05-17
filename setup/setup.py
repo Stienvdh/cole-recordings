@@ -89,6 +89,7 @@ payload_configvars = {
     "INT_CLIENT_ID": webex_client_id,
     "INT_CLIENT_SECRET": webex_client_secret
 }
+print(payload_configvars)
 if webex_bot_email != '':
     payload_configvars['WT_BOT_EMAIL'] = webex_bot_email
 if webex_room_id != '':
