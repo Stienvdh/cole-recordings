@@ -31,7 +31,7 @@ api = WebexTeamsAPI(access_token=WT_BOT_TOKEN)
 
 
 # defining the decorater and route registration for incoming alerts
-@app.route('/', methods=['POST'])
+@app.route('/', methods=['GET, POST'])
 def alert_received():
     raw_json = request.get_json()
     print(raw_json)
