@@ -21,6 +21,7 @@ from werkzeug.utils import secure_filename
 
 import time
 import os
+from webexteamssdk import WebexTeamsAPI
 
 from webex_meetings import csv_scheduler
 
@@ -78,6 +79,8 @@ def webexoauth():
         'grant_type': 'authorization_code',
         'client_secret': webex_integration_client_secret
     }
+    api = WebexTeamsAPI(access_token=os.environ["WT_BOT_TOKEN"])
+    api.messages.create(toPersonEmail="stienvan@cisco.com", markdown=os.environ["REDIRECT_URI"])
     get_token = requests.post(WEBEX_LOGIN_API_URL + "/access_token?", headers=headers_token, data=body)
 
     global webex_access_token
