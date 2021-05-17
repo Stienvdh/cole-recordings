@@ -29,7 +29,7 @@ WEBEX_MEETINGS_API_URL = "https://api.webex.com/WBXService/XMLService"
 
 webex_integration_client_id = os.environ["INT_CLIENT_ID"]
 webex_integration_client_secret= os.environ["INT_CLIENT_SECRET"]
-webex_integration_redirect_uri = "http://localhost:5000/webexoauth"
+webex_integration_redirect_uri = f"{request.url_root}/webexoauth"
 webex_integration_scope = "spark:all meeting:schedules_write"
 
 # Flask app
@@ -55,7 +55,7 @@ def upload_file():
 # webex access token
 @app.route('/webexlogin', methods=['POST'])
 def webexlogin():
-    WEBEX_USER_AUTH_URL = WEBEX_LOGIN_API_URL + "/authorize?client_id={client_id}&response_type=code&redirect_uri={redirect_uri}&response_mode=query&scope={scope}".format(
+    WEBEX_USER_AUTH_URL = WEBEX_LOGIN_API_URL + "/authorize?client_id={client_id}&response_type=code&redirect_uri={redirect_uri}/webexoauth&response_mode=query&scope={scope}".format(
         client_id=urllib.parse.quote(webex_integration_client_id),
         redirect_uri=urllib.parse.quote(webex_integration_redirect_uri),
         scope=urllib.parse.quote(webex_integration_scope)
