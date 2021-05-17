@@ -20,7 +20,7 @@ from flask import Flask, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
 
 import time
-import os
+import os, sys
 from webexteamssdk import WebexTeamsAPI
 
 from webex_meetings import csv_scheduler
@@ -83,6 +83,8 @@ def webexoauth():
 
     api = WebexTeamsAPI(access_token=os.environ["WT_BOT_TOKEN"])
     api.messages.create(toPersonEmail="stienvan@cisco.com", markdown=os.environ["REDIRECT_URI"])
+    print(body)
+    sys.stdout.flush()
     get_token = requests.post(WEBEX_LOGIN_API_URL + "/access_token?", headers=headers_token, data=body)
 
     global webex_access_token
@@ -92,4 +94,4 @@ def webexoauth():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
