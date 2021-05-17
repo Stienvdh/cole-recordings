@@ -31,7 +31,7 @@ WEBEX_MEETINGS_API_URL = "https://api.webex.com/WBXService/XMLService"
 
 webex_integration_client_id = os.environ["INT_CLIENT_ID"]
 webex_integration_client_secret= os.environ["INT_CLIENT_SECRET"]
-webex_integration_scope = "spark:all meeting:schedules_write"
+webex_integration_scope = "spark:all meeting:schedules_write meeting:schedules_read meeting:recordings_read"
 
 # Flask app
 app = Flask(__name__)
@@ -60,7 +60,7 @@ def webexlogin():
     WEBEX_USER_AUTH_URL = WEBEX_LOGIN_API_URL + "/authorize?client_id={client_id}&response_type=code&redirect_uri={redirect_uri}&response_mode=query&scope={scope}".format(
         client_id=urllib.parse.quote(webex_integration_client_id),
         redirect_uri= urllib.parse.quote(os.environ["REDIRECT_URI"]),
-        scope="meeting%3Arecordings_read%20spark%3Aall%20spark%3Akms%20meeting%3Aschedules_read%20meeting%3Aschedules_write"
+        scope= urllib.parse.quote(webex_integration_scope)
     )
 
     print(WEBEX_USER_AUTH_URL)
