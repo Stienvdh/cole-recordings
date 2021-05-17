@@ -57,7 +57,7 @@ def upload_file():
 def webexlogin():
     WEBEX_USER_AUTH_URL = WEBEX_LOGIN_API_URL + "/authorize?client_id={client_id}&response_type=code&redirect_uri={redirect_uri}&response_mode=query&scope={scope}".format(
         client_id=urllib.parse.quote(webex_integration_client_id),
-        redirect_uri= urllib.parse.quote(f'{request.url_root}webexoauth'),
+        redirect_uri= urllib.parse.quote(os.environ["REDIRECT_URI"]),
         scope=urllib.parse.quote(webex_integration_scope)
     )
 
@@ -79,6 +79,8 @@ def webexoauth():
         'grant_type': 'authorization_code',
         'client_secret': webex_integration_client_secret
     }
+
+
     api = WebexTeamsAPI(access_token=os.environ["WT_BOT_TOKEN"])
     api.messages.create(toPersonEmail="stienvan@cisco.com", markdown=os.environ["REDIRECT_URI"])
     get_token = requests.post(WEBEX_LOGIN_API_URL + "/access_token?", headers=headers_token, data=body)
