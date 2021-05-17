@@ -56,7 +56,7 @@ def upload_file():
 def webexlogin():
     WEBEX_USER_AUTH_URL = WEBEX_LOGIN_API_URL + "/authorize?client_id={client_id}&response_type=code&redirect_uri={redirect_uri}&response_mode=query&scope={scope}".format(
         client_id=urllib.parse.quote(webex_integration_client_id),
-        redirect_uri=f'{request.url_root}/webexoauth',
+        redirect_uri=f'{request.url_root}webexoauth',
         scope=urllib.parse.quote(webex_integration_scope)
     )
     return redirect(WEBEX_USER_AUTH_URL)
@@ -72,7 +72,7 @@ def webexoauth():
     body = {
         'client_id': webex_integration_client_id,
         'code': webex_code,
-        'redirect_uri': f'{request.url_root}/webexoauth',
+        'redirect_uri': f'{request.url_root}webexoauth',
         'grant_type': 'authorization_code',
         'client_secret': webex_integration_client_secret
     }
