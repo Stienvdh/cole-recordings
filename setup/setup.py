@@ -88,7 +88,7 @@ payload_configvars = {
     "WT_BOT_TOKEN": webex_bot_token,
     "INT_CLIENT_ID": webex_client_id,
     "INT_CLIENT_SECRET": webex_client_secret,
-    "REDIRECT_URI": ""
+    "REDIRECT_URI": app_url + "webexoauth"
 }
 print(payload_configvars)
 if webex_bot_email != '':
