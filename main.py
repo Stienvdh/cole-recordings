@@ -59,7 +59,9 @@ def webexlogin():
         redirect_uri= urllib.parse.quote(f'{request.url_root}webexoauth'),
         scope=urllib.parse.quote(webex_integration_scope)
     )
-    os.environ['REDIRECT_URI'] = f'{request.url_root}webexoauth'
+    with open("redirect.txt","w+") as f:
+        f.write(f'{request.url_root}webexoauth')
+
     return redirect(WEBEX_USER_AUTH_URL)
 
 
@@ -71,10 +73,14 @@ def webexoauth():
         "Content-type": "application/x-www-form-urlencoded"
     }
 
+    redirecturi = ""
+    with open("redirect.txt","r") as f:
+        redirecturi = f.read()
+
     body = {
         'client_id': webex_integration_client_id,
         'code': webex_code,
-        'redirect_uri': os.environ['REDIRECT_URI'],
+        'redirect_uri': redirecturi,
         'grant_type': 'authorization_code',
         'client_secret': webex_integration_client_secret
     }
